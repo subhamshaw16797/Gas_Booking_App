@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.gasbooking.entity.Customer;
 
 @Repository
-public interface ICustomerRepository extends JpaRepository<Customer, Integer>{
-	
+public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
+
 }

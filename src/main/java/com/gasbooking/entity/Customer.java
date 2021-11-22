@@ -10,36 +10,36 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Customer extends AbstractUser{
-	
+public class Customer extends AbstractUser {
+
 	// data members
 	@Id
 	@GeneratedValue
 	private int customerId;
-	
+
 	@NotBlank(message = "Account number can't be empty.")
 	@Size(min = 10, max = 16)
 	private int accountNo;
-	
+
 //	@NotBlank(message = "IFSC No can't be empty.")
 	@Pattern(regexp = "^[A-Z]{4}0[0-9]{6,7}$", message = "Given IFSC No. is not valid.")
 	private String ifscNo;
-	
+
 //	@NotBlank(message = "PAN no. can't be empty")
 	@Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", message = "Given PAN No. is not valid.")
 	private String pan;
-	
+
 	@OneToOne(targetEntity = Cylinder.class, cascade = CascadeType.ALL)
 	private Cylinder cylinder;
-	
+
 	@OneToOne(targetEntity = Bank.class, cascade = CascadeType.ALL)
 	private Bank bank;
-	
+
 	// constructors
 	public Customer() {
 		super();
 	}
-	
+
 	public Customer(int customerId,
 			@NotBlank(message = "Account number can't be empty.") @Size(min = 10, max = 16) int accountNo,
 			@NotBlank(message = "IFSC No can't be empty.") @Pattern(regexp = "^[A-Z]{4}0[0-9]{6,7}") String ifscNo,
@@ -54,7 +54,7 @@ public class Customer extends AbstractUser{
 		this.bank = bank;
 	}
 
-	//getters and setters
+	// getters and setters
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -62,7 +62,7 @@ public class Customer extends AbstractUser{
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	
+
 	public Cylinder getCylinder() {
 		return cylinder;
 	}
@@ -108,5 +108,5 @@ public class Customer extends AbstractUser{
 		return "Customer [customerId=" + customerId + ", cylinder=" + cylinder + ", bank=" + bank + ", accountNo="
 				+ accountNo + ", ifscNo=" + ifscNo + ", pan=" + pan + "]";
 	}
-	
+
 }

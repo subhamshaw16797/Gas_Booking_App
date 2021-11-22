@@ -12,7 +12,7 @@ public class GasBookingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GasBookingApplication.class, args);
-		
+
 		// Checking
 //		ICustomerService customerService = context.getBean(ICustomerService.class);
 //		Customer customer = new Customer();
@@ -23,7 +23,7 @@ public class GasBookingApplication {
 //		
 //		Customer addedCustomer = customerService.insertCustomer(customer);
 //		System.out.println(addedCustomer);
-		
+
 	}
 
 }

@@ -16,13 +16,12 @@ import com.gasbooking.service.ICustomerService;
 @RequestMapping("/customer")
 //@CrossOrigin
 public class CustomerController {
-	
+
 	@Autowired
 	ICustomerService customerService;
-	
-	
+
 	@PostMapping("/add")
-	public ResponseEntity<?> insertCustomer(@RequestBody Customer customer){
+	public ResponseEntity<?> insertCustomer(@RequestBody Customer customer) {
 		Customer addedCustomer = customerService.insertCustomer(customer);
 		return new ResponseEntity<Customer>(addedCustomer, HttpStatus.CREATED);
 	}
