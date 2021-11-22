@@ -7,5 +7,5 @@ import com.gasbooking.entity.Customer;
 
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Integer>{
-
+	
 }
