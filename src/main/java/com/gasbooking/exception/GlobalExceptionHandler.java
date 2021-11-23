@@ -12,6 +12,13 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	@ExceptionHandler(InputMismatchException.class)
+	public ResponseEntity<?> inputMismatchException(InputMismatchException im, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), im.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public ResponseEntity<?> customerNotFoundException(CustomerNotFoundException ce, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ce.getMessage(),
@@ -19,13 +26,27 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(InputMismatchException.class)
-	public ResponseEntity<?> inputMismatchException(InputMismatchException im, WebRequest request) {
-		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), im.getMessage(),
+	@ExceptionHandler(GasBookingNotFoundException.class)
+	public ResponseEntity<?> gasBookingNotFoundException(GasBookingNotFoundException ge, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ge.getMessage(),
 				request.getDescription(false));
-		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	}
-
+	
+	@ExceptionHandler(SurrenderCylinderNotFoundException.class)
+	public ResponseEntity<?> surrenderCylinderNotFound(SurrenderCylinderNotFoundException se, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), se.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(BankNotFoundException.class)
+	public ResponseEntity<?> bankNotFoundException(BankNotFoundException be, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), be.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> exception(Exception ex, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(),

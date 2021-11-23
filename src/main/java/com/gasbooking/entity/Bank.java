@@ -1,13 +1,23 @@
 package com.gasbooking.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Bank {
+public class Bank implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1794093769285039468L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,21 +25,24 @@ public class Bank {
 
 	@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.")
 	private String bankName;
-
-	private String address;
-
+	
+	@JsonManagedReference
+	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
+	private Customer customer;
+	
+	
 	// constructors
 	public Bank() {
 		super();
 	}
-
+	
 	public Bank(int bankId,
 			@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.") String bankName,
-			String address) {
+			Customer customer) {
 		super();
 		this.bankId = bankId;
 		this.bankName = bankName;
-		this.address = address;
+		this.customer = customer;
 	}
 
 	// getters and setters
@@ -48,19 +61,21 @@ public class Bank {
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
 	}
-
-	public String getAddress() {
-		return address;
+	
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	// toString
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", address=" + address + "]";
+		return "Bank [bankId=" + bankId + ", bankName=" + bankName + "]";
 	}
-
+	
 }
+
+// developer - Tracy Lewis

@@ -23,6 +23,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Transactional
 	@Override
 	public Customer insertCustomer(Customer customer) {
+		
 		Customer insertedCustomer = customerRepository.save(customer);
 		return insertedCustomer;
 	}
@@ -41,7 +42,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				gotCustomer.setIfscNo(customer.getIfscNo());
 				gotCustomer.setPan(customer.getPan());
 				gotCustomer.setBank(customer.getBank());
-				gotCustomer.setCylinder(customer.getCylinder());
+//				gotCustomer.setCylinder(customer.getCylinder());
 				Customer updateCustomer = customerRepository.save(gotCustomer);
 				return updateCustomer;
 			}

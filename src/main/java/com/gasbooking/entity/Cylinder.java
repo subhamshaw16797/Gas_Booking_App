@@ -1,12 +1,25 @@
 package com.gasbooking.entity;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Cylinder {
+public class Cylinder implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1342296579429539054L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cylinderId;
@@ -18,6 +31,14 @@ public class Cylinder {
 	private String strapColor;
 	
 	private float price;
+	
+	@JsonManagedReference
+	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
+	private Customer customer;
+	
+	@JsonBackReference
+	@OneToOne(targetEntity = SurrenderCylinder.class, cascade = CascadeType.ALL)
+	private SurrenderCylinder surrenderCylinder;
 	
 	public Cylinder(int cylinderId,String type,float weight,String strapColor,float price) {
 		super();
@@ -82,3 +103,5 @@ public class Cylinder {
 				+ strapColor + ", price=" + price + "]";
 	}
 }
+
+// developer - Chinta Goverdhan Reddy
