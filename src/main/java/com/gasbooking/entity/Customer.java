@@ -6,8 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.Size;
 
 @Entity
 public class Customer extends AbstractUser {
@@ -17,8 +18,9 @@ public class Customer extends AbstractUser {
 	@GeneratedValue
 	private int customerId;
 
-	@NotBlank(message = "Account number can't be empty.")
-	@Size(min = 10, max = 16)
+//	@NotBlank(message = "Account number can't be empty.")
+//	@NotNull
+//	@Size(min = 5, max = 10)
 	private int accountNo;
 
 //	@NotBlank(message = "IFSC No can't be empty.")
@@ -40,8 +42,7 @@ public class Customer extends AbstractUser {
 		super();
 	}
 
-	public Customer(int customerId,
-			@NotBlank(message = "Account number can't be empty.") @Size(min = 10, max = 16) int accountNo,
+	public Customer(int customerId, int accountNo,
 			@NotBlank(message = "IFSC No can't be empty.") @Pattern(regexp = "^[A-Z]{4}0[0-9]{6,7}") String ifscNo,
 			@NotBlank(message = "PAN no. can't be empty") @Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}", message = "Given PAN No. is not valid.") String pan,
 			Cylinder cylinder, Bank bank) {

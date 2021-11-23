@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	ICustomerRepository customerRepository;
 
 	// inserting a single object
+	@Transactional
 	@Override
 	public Customer insertCustomer(Customer customer) {
 		Customer insertedCustomer = customerRepository.save(customer);
@@ -26,7 +29,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// updating a single object
 	@Override
-	public Customer updateCustomer(Customer customer) throws CustomerNotFoundException, InputMismatchException {
+	public Customer updateCustomer(Customer customer) throws InputMismatchException, CustomerNotFoundException {
 		Integer getId = Integer.valueOf(customer.getCustomerId());
 
 		if (getId instanceof Integer) {
@@ -54,7 +57,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// deleting a single object by id
 	@Override
-	public Customer deleteCustomer(int customerId) throws CustomerNotFoundException, InputMismatchException {
+	public Customer deleteCustomer(int customerId) throws InputMismatchException, CustomerNotFoundException {
 
 		Integer id = Integer.valueOf(customerId);
 
@@ -77,7 +80,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// getting list of object
 	@Override
-	public List<Customer> viewCustomers() throws CustomerNotFoundException, InputMismatchException {
+	public List<Customer> viewCustomers() throws InputMismatchException, CustomerNotFoundException {
 
 		List<Customer> getAllCustomer = customerRepository.findAll();
 		if (getAllCustomer.isEmpty()) {
@@ -88,7 +91,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// getting a single object
 	@Override
-	public Customer viewCustomer(int customerId) throws CustomerNotFoundException, InputMismatchException {
+	public Customer viewCustomer(int customerId) throws InputMismatchException, CustomerNotFoundException {
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
