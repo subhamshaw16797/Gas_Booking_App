@@ -4,10 +4,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gasbooking.entity.Customer;
 import com.gasbooking.exception.CustomerNotFoundException;
@@ -29,20 +28,26 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// updating a single object
+	@Transactional
 	@Override
 	public Customer updateCustomer(Customer customer) throws InputMismatchException, CustomerNotFoundException {
-		Integer getId = Integer.valueOf(customer.getCustomerId());
+		Integer getId = Integer.valueOf(customer.getId());
 
 		if (getId instanceof Integer) {
-			Optional<Customer> optional = customerRepository.findById(customer.getCustomerId());
+			Optional<Customer> optional = customerRepository.findById(customer.getId());
 
 			if (optional.isPresent()) {
 				Customer gotCustomer = optional.get();
+				gotCustomer.setUserName(customer.getUserName());
+				gotCustomer.setPassword(customer.getPassword());
+				gotCustomer.setAddress(customer.getAddress());
+				gotCustomer.setEmail(customer.getEmail());
+				gotCustomer.setMobileNumber(customer.getMobileNumber());
 				gotCustomer.setAccountNo(customer.getAccountNo());
 				gotCustomer.setIfscNo(customer.getIfscNo());
 				gotCustomer.setPan(customer.getPan());
-//				gotCustomer.setBank(customer.getBank());
-//				gotCustomer.setCylinder(customer.getCylinder());
+				gotCustomer.setBank(customer.getBank());
+				gotCustomer.setCylinder(customer.getCylinder());
 				Customer updateCustomer = customerRepository.save(gotCustomer);
 				return updateCustomer;
 			}
@@ -57,6 +62,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// deleting a single object by id
+	@Transactional
 	@Override
 	public Customer deleteCustomer(int customerId) throws InputMismatchException, CustomerNotFoundException {
 
@@ -80,6 +86,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// getting list of object
+	@Transactional
 	@Override
 	public List<Customer> viewCustomers() throws InputMismatchException, CustomerNotFoundException {
 
@@ -91,8 +98,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// getting a single object
+	@Transactional
 	@Override
-	public Customer viewCustomer(int customerId) throws InputMismatchException, CustomerNotFoundException {
+	public Customer viewCustomer(int customerId) throws NumberFormatException, CustomerNotFoundException {
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
@@ -105,7 +113,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				throw new CustomerNotFoundException("There are no such customer is present in the database.");
 			}
 		} else {
-			throw new InputMismatchException("ID should be a number type.");
+			throw new NumberFormatException("ID should be a number type.");
 		}
 	}
 

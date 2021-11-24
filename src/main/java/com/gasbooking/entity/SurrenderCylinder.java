@@ -3,17 +3,14 @@ package com.gasbooking.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "surrender_cylinder")
@@ -32,14 +29,12 @@ public class SurrenderCylinder implements Serializable{
 	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
 	
-	@JsonBackReference
-	@OneToOne(targetEntity = Customer.class)
-	@JoinColumn(name = "customer_id")
+	@JsonBackReference(value = "3")
+	@OneToOne(targetEntity = Customer.class, mappedBy = "surrenderCylinder")
 	private Customer customer;
 	
-	@JsonBackReference
-	@OneToOne(targetEntity = Cylinder.class)
-	@JoinColumn(name = "cylinder_id")
+	@JsonBackReference(value = "5")
+	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
 	private Cylinder cylinder;
 	
 	// constructor

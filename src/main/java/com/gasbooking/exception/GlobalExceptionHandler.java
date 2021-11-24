@@ -19,6 +19,13 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(NumberFormatException.class)
+	public ResponseEntity<?> numberFormatException(NumberFormatException nfe, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), nfe.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public ResponseEntity<?> customerNotFoundException(CustomerNotFoundException ce, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ce.getMessage(),

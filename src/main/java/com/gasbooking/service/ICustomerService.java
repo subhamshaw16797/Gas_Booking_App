@@ -16,5 +16,5 @@ public interface ICustomerService {
 
 	public List<Customer> viewCustomers() throws InputMismatchException, CustomerNotFoundException;
 
-	public Customer viewCustomer(int customerId) throws InputMismatchException, CustomerNotFoundException;
+	public Customer viewCustomer(int customerId) throws NumberFormatException, CustomerNotFoundException;
 }

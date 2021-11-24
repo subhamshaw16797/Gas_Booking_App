@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gasbooking.entity.SurrenderCylinder;
 import com.gasbooking.repository.ISurrenderCylinderRepository;
@@ -16,12 +17,14 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 	ISurrenderCylinderRepository surrendercylinderrepository;
 
 	@Override
+	@Transactional
 	public SurrenderCylinder insertSurrenderCylinder(SurrenderCylinder sc) {
 
 		return surrendercylinderrepository.save(sc);
 	}
 
 	@Override
+	@Transactional
 	public SurrenderCylinder updateSurrenderCylinder(SurrenderCylinder sc) {
 		int surrendercylinderid = sc.getSurrenderId();
 		Supplier s1 = () -> new ServiceException("Given Id is not found in the Database");
@@ -40,6 +43,7 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 	}
 
 	@Override
+	@Transactional
 	public SurrenderCylinder deleteSurrenderCylinder(SurrenderCylinder sc) {
 		int surrendercylinderid=sc.getSurrenderId();
 		SurrenderCylinder entity = surrendercylinderrepository.getOne(surrendercylinderid);
@@ -48,6 +52,7 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 	}
 
 	@Override
+	@Transactional
 	public int CountSurrenderCylinders() {
 
 		return (int) this.surrendercylinderrepository.count();

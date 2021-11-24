@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "bank")
@@ -31,7 +31,7 @@ public class Bank implements Serializable{
 	@Column(name = "bank_name")
 	private String bankName;
 	
-	@JsonManagedReference
+	@JsonBackReference(value = "2")
 	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
 	private Customer customer;
 	
@@ -40,6 +40,8 @@ public class Bank implements Serializable{
 	public Bank() {
 		super();
 	}
+	
+	// getters and setters
 	
 	public Bank(int bankId,
 			@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.") String bankName,
@@ -50,8 +52,6 @@ public class Bank implements Serializable{
 		this.customer = customer;
 	}
 
-	// getters and setters
-	
 	public int getBankId() {
 		return bankId;
 	}
@@ -80,9 +80,8 @@ public class Bank implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankName=" + bankName + "]";
+		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", customer=" + customer + "]";
 	}
-	
 }
 
 // developer - Tracy Lewis
