@@ -4,16 +4,19 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-
+@Table(name = "surrender_cylinder")
 public class SurrenderCylinder implements Serializable{
 	
 	/**
@@ -23,22 +26,28 @@ public class SurrenderCylinder implements Serializable{
 
 	@Id
 	@GeneratedValue
+	@Column(name = "surrender_id")
 	private int surrenderId;
 	
+	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
 	
-	@JsonManagedReference
-	@OneToOne(targetEntity = Customer.class, mappedBy = "surrenderCylinder")
+	@JsonBackReference
+	@OneToOne(targetEntity = Customer.class)
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
-	@JsonManagedReference
-	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
+	@JsonBackReference
+	@OneToOne(targetEntity = Cylinder.class)
+	@JoinColumn(name = "cylinder_id")
 	private Cylinder cylinder;
+	
+	// constructor
 	
 	public SurrenderCylinder() {
 		super();
 	}
-	
+
 	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
 		super();
 		this.surrenderId = surrenderId;
@@ -47,6 +56,8 @@ public class SurrenderCylinder implements Serializable{
 		this.cylinder = cylinder;
 	}
 
+	// setters and getters
+	
 	public int getSurrenderId() {
 		return surrenderId;
 	}
@@ -79,12 +90,14 @@ public class SurrenderCylinder implements Serializable{
 		this.cylinder = cylinder;
 	}
 
+	// toString
+	
 	@Override
 	public String toString() {
 		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", customer="
 				+ customer + ", cylinder=" + cylinder + "]";
 	}
-
+	
 }
 
 // developer - Jangam Mohan Kalyan

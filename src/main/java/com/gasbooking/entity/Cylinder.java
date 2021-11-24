@@ -3,16 +3,20 @@ package com.gasbooking.entity;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "cylinder")
 public class Cylinder implements Serializable {
 	
 	/**
@@ -22,23 +26,31 @@ public class Cylinder implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "cylinder_id")
 	private int cylinderId;
 	
+	@Column(name = "type")
 	private String type;
 	
+	@Column(name = "weight")
 	private float weight;
 	
+	@Column(name = "strap_color")
 	private String strapColor;
 	
+	@Column(name = "price")
 	private float price;
 	
 	@JsonManagedReference
 	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
 	private Customer customer;
 	
-	@JsonBackReference
-	@OneToOne(targetEntity = SurrenderCylinder.class, cascade = CascadeType.ALL)
+	
+	@JsonManagedReference
+	@OneToOne(targetEntity = SurrenderCylinder.class, mappedBy = "cylinder", cascade = CascadeType.ALL)
 	private SurrenderCylinder surrenderCylinder;
+	
+	// constructor
 	
 	public Cylinder(int cylinderId,String type,float weight,String strapColor,float price) {
 		super();
@@ -51,10 +63,10 @@ public class Cylinder implements Serializable {
 	
 	public Cylinder() {
 		super();
-
 	}
 	
-	//getters
+	// getters and setters
+	
 	public int getcylinderId() {
 		return cylinderId;
 	}
@@ -96,7 +108,8 @@ public class Cylinder implements Serializable {
 		this.price = price;
 	}
 	
-    //ToString	
+    //ToString
+	
 	@Override
 	public String toString() {
 		return "Cylinder [cylinderId=" + cylinderId + ", type=" + type + ", weight=" + weight + ", strapColor="

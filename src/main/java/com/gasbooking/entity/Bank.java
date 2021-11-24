@@ -2,16 +2,19 @@ package com.gasbooking.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "bank")
 public class Bank implements Serializable{
 
 	/**
@@ -21,17 +24,19 @@ public class Bank implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "bank_id")
 	private int bankId;
 
 	@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.")
+	@Column(name = "bank_name")
 	private String bankName;
 	
 	@JsonManagedReference
 	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
 	private Customer customer;
 	
-	
 	// constructors
+	
 	public Bank() {
 		super();
 	}
@@ -46,6 +51,7 @@ public class Bank implements Serializable{
 	}
 
 	// getters and setters
+	
 	public int getBankId() {
 		return bankId;
 	}
@@ -71,6 +77,7 @@ public class Bank implements Serializable{
 	}
 
 	// toString
+	
 	@Override
 	public String toString() {
 		return "Bank [bankId=" + bankId + ", bankName=" + bankName + "]";

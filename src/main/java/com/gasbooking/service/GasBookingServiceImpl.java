@@ -11,8 +11,10 @@ import com.gasbooking.repository.IGasBookingRepository;
 
 @Service
 public class GasBookingServiceImpl implements IGasBookingService{
+	
 	@Autowired
 	IGasBookingRepository gasBookingRepo;
+	
 	@Override
 	public GasBooking insertGasBooking(GasBooking gasBooking) {
 		return gasBookingRepo.save(gasBooking);

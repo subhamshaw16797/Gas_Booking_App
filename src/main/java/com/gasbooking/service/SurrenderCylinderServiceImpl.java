@@ -28,8 +28,8 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 		SurrenderCylinder g1 = null;
 		try {
 			g1 = surrendercylinderrepository.findById(surrendercylinderid).orElseThrow(s1);
-			g1.setCustomer(sc.getCustomer());
-			g1.setCylinder(sc.getCylinder());
+//			g1.setCustomer(sc.getCustomer());
+//			g1.setCylinder(sc.getCylinder());
 			g1.setSurrenderDate(sc.getSurrenderDate());
 			g1.setSurrenderId(sc.getSurrenderId());
 
