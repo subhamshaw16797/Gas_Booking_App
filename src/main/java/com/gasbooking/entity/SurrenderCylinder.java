@@ -29,8 +29,6 @@ public class SurrenderCylinder implements Serializable{
 	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
 	
-	@JsonBackReference(value = "3")
-	@OneToOne(targetEntity = Customer.class, mappedBy = "surrenderCylinder")
 	private Customer customer;
 	
 	@JsonBackReference(value = "5")

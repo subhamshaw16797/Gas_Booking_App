@@ -55,11 +55,6 @@ public class Customer extends AbstractUser implements Serializable {
 	@OneToOne(targetEntity = Bank.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "bank_id")
 	private Bank bank;
-
-	@JsonManagedReference(value = "3")
-	@OneToOne(targetEntity = SurrenderCylinder.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "surrender_cylinder_id")
-	private SurrenderCylinder surrenderCylinder;
 	
 	@JsonManagedReference("4")
 	@OneToMany(targetEntity = GasBooking.class, cascade = CascadeType.ALL, mappedBy = "customer")
