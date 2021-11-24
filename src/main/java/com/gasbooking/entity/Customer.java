@@ -119,14 +119,6 @@ public class Customer extends AbstractUser implements Serializable {
 		this.bank = bank;
 	}
 
-	public SurrenderCylinder getSurrenderCylinder() {
-		return surrenderCylinder;
-	}
-
-	public void setSurrenderCylinder(SurrenderCylinder surrenderCylinder) {
-		this.surrenderCylinder = surrenderCylinder;
-	}
-
 	public List<GasBooking> getGasBooking() {
 		return gasBooking;
 	}
