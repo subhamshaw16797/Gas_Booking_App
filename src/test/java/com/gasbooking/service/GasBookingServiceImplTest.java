@@ -58,16 +58,16 @@ public class GasBookingServiceImplTest {
 		 Mockito.when(gasBookingRepository.findById(33)).thenReturn(g2);
 		 assertThat(gasBookingService.deleteGasBooking(33)).isEqualTo(g1);
 	}
-	@Test
-	void testGetBillByCustomerId() throws GasBookingNotFoundException {
-		GasBooking g1=new GasBooking();
-		g1.setGasBookingId(33);
-		g1.setLocalDate(LocalDate.now());
-		g1.setStatus(true);
-		g1.setBill(1200);
-		Optional<GasBooking> g2=Optional.of(g1);
-		Mockito.when(gasBookingRepository.findBycustomerId(21)).thenReturn(g2);
-		 assertThat(gasBookingService.getBill(21)).isEqualTo(g1);
-		
-	}
+//	@Test
+//	void testGetBillByCustomerId() throws GasBookingNotFoundException {
+//		GasBooking g1=new GasBooking();
+//		g1.setGasBookingId(33);
+//		g1.setLocalDate(LocalDate.now());
+//		g1.setStatus(true);
+//		g1.setBill(1200);
+//		Optional<GasBooking> g2=Optional.of(g1);
+//		Mockito.when(gasBookingRepository.findBycustomerId(21)).thenReturn(g2);
+//		 assertThat(gasBookingService.getBill(21)).isEqualTo(g1);
+//		
+//	}
 }

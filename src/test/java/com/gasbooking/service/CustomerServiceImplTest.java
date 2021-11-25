@@ -22,8 +22,8 @@ class CustomerServiceImplTest {
 	void testInsertCustomer() {
 		Customer c1 = new Customer();
 		c1.setUsername("subham");
-		c1.setPassword("subham");
-		c1.setAddress("Kumrashol");
+		c1.setPassword("subham@16");
+		c1.setAddress("Kumrashol-");
 		c1.setEmail("subhamshaw@gmail.com");
 		c1.setMobileNumber("9576979049");
 		c1.setIfscNo("ABCD0122344");

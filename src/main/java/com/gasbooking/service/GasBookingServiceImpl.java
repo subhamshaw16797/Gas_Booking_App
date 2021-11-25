@@ -1,10 +1,12 @@
 package com.gasbooking.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gasbooking.entity.Customer;
 import com.gasbooking.entity.GasBooking;
 import com.gasbooking.exception.GasBookingNotFoundException;
 import com.gasbooking.repository.IGasBookingRepository;
@@ -54,14 +56,16 @@ public class GasBookingServiceImpl implements IGasBookingService{
 
 	@Override
 	public GasBooking getBill(int customerId) throws GasBookingNotFoundException {
-		Optional<GasBooking> optional=gasBookingRepo.findBycustomerId(customerId);
-		if(optional.isPresent()) {
-			GasBooking details=optional.get();
-			return details;
+		Customer optional = gasBookingRepo.findBycustomerId(customerId);
+		List<GasBooking> list =  optional.getGasBooking();
+		
+		GasBooking gotDetails = null;
+		
+		for(int i=0; i<list.size(); i++) {
+			gotDetails = list.get(i);
 		}
-		else {
-			throw new GasBookingNotFoundException("Gas Booking detalis not found");
-		}
+		
+		return gotDetails;
 	}
 
 }
