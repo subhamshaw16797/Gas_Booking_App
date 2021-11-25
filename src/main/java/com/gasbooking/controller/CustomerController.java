@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gasbooking.entity.Customer;
@@ -58,9 +59,9 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(getSingleCustomer, HttpStatus.OK);
 	}
 	
-//	@GetMapping("/validateUser")
-//	public ResponseEntity<?> validateCustomer(@RequestParam("user") String username, @RequestParam("pass") String password) throws NumberFormatException, InputMismatchException, NullPointerException, CustomerNotFoundException {
-//		Customer validCustomer = customerSer.validateCustomer(username, password);
-//		return new ResponseEntity<Customer>(validCustomer,HttpStatus.OK);
-//	}
+	@GetMapping("/validateUser")
+	public ResponseEntity<?> validateCustomer(@RequestParam("user") String username, @RequestParam("pass") String password) throws NumberFormatException, InputMismatchException, NullPointerException, CustomerNotFoundException {
+		Customer validCustomer = customerSer.validateCustomer(username, password);
+		return new ResponseEntity<Customer>(validCustomer,HttpStatus.OK);
+	}
 }

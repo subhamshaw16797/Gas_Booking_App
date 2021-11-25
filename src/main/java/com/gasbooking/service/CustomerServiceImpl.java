@@ -112,23 +112,27 @@ public class CustomerServiceImpl implements ICustomerService {
 		}
 	}
 
-//	@Override
-//	public Customer validateCustomer(String username, String password) throws NullPointerException, NumberFormatException, InputMismatchException, CustomerNotFoundException {
-//		
-//		if((username != null) && (password != null)) {
-//			Customer validCustomer = customerRepository.findByUsernameAndPassword(username, password);
-//			
-//			if(validCustomer != null) {
-//				return validCustomer;
-//			}
-//			else {
-//				throw new CustomerNotFoundException("Username or password is not exist. please try again.");
-//			}
-//		}
-//		else {
-//			throw new NullPointerException("Please fill the username/password");
-//		}
-//		
-//	}
+	@Override
+	public Customer validateCustomer(String username, String password) throws NullPointerException, NumberFormatException, InputMismatchException, CustomerNotFoundException {
+		
+		if(username!=null) {
+			if(password!=null) {
+				Customer validCustomer = customerRepository.findByUsernameAndPassword(username, password);
+				if(validCustomer != null) {
+					return validCustomer;
+				}
+				else {
+					throw new CustomerNotFoundException("Username or password is not exist. please try again.");
+				}
+			}
+			else {
+				throw new CustomerNotFoundException("Please provide the password.");
+			}
+		}
+		else {
+			throw new CustomerNotFoundException("Please provide the username.");
+		}
+		
+	}
 
 }

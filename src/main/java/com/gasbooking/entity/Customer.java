@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "customer")
 @PrimaryKeyJoinColumn(name = "customer_id")
-//@JsonIgnoreProperties()
 public class Customer extends AbstractUser implements Serializable {
 
 	/**
@@ -29,10 +28,6 @@ public class Customer extends AbstractUser implements Serializable {
 	private static final long serialVersionUID = 195158816166559020L;
 
 	// data members
-//	@Id
-//	@GeneratedValue
-//	@Column(name = "customer_id")
-//	private int customerId;
 
 	@NotNull
 	@Column(name = "account_no")
