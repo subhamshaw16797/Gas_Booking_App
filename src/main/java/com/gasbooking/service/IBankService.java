@@ -7,7 +7,7 @@ public interface IBankService {
 	
 	public Bank insertBank(Bank bank);
 	
-	public Bank updateBank(Bank bank) throws BankNotFoundException;
+	public Bank updateBank(int bankId, Bank bank) throws BankNotFoundException;
 	
 	public Bank deleteBank(int bankId) throws BankNotFoundException;
 

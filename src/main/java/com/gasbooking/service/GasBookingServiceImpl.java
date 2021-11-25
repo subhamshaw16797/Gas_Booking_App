@@ -23,8 +23,7 @@ public class GasBookingServiceImpl implements IGasBookingService{
 	}
 
 	@Override
-	public GasBooking updateGasBooking(GasBooking gasBooking) throws GasBookingNotFoundException {
-		int gasBookingId=gasBooking.getGasBookingId();
+	public GasBooking updateGasBooking(int gasBookingId, GasBooking gasBooking) throws GasBookingNotFoundException {
 		
 		Optional<GasBooking> optional = gasBookingRepo.findById(gasBookingId);
 		if(optional.isPresent()) {

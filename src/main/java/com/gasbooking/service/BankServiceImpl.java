@@ -22,9 +22,7 @@ public class BankServiceImpl implements IBankService {
 	}
 
 	@Override
-	public Bank updateBank(Bank bank) throws BankNotFoundException {
-		
-		int bankId = bank.getBankId();
+	public Bank updateBank(int bankId, Bank bank) throws BankNotFoundException {
 		
 		Optional<Bank> optional = bankRepository.findById(bankId);
 		

@@ -7,7 +7,7 @@ public interface IGasBookingService {
 	
 	public GasBooking insertGasBooking(GasBooking gasBooking);
 	
-	public GasBooking updateGasBooking(GasBooking gasBooking) throws GasBookingNotFoundException;
+	public GasBooking updateGasBooking(int gasBookingId, GasBooking gasBooking) throws GasBookingNotFoundException;
 	
 	public GasBooking deleteGasBooking(int gasBookingId) throws GasBookingNotFoundException;
 	
