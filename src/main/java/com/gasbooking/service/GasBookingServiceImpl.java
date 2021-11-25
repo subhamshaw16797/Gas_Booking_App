@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gasbooking.entity.GasBooking;
 import com.gasbooking.exception.GasBookingNotFoundException;
@@ -17,13 +16,11 @@ public class GasBookingServiceImpl implements IGasBookingService{
 	IGasBookingRepository gasBookingRepo;
 	
 	@Override
-	@Transactional
 	public GasBooking insertGasBooking(GasBooking gasBooking) {
 		return gasBookingRepo.save(gasBooking);
 	}
 
 	@Override
-	@Transactional
 	public GasBooking updateGasBooking(GasBooking gasBooking) throws GasBookingNotFoundException {
 		int gasBookingId=gasBooking.getGasBookingId();
 		
@@ -42,7 +39,6 @@ public class GasBookingServiceImpl implements IGasBookingService{
 	}
 
 	@Override
-	@Transactional
 	public GasBooking deleteGasBooking(int gasBookingId) throws GasBookingNotFoundException {
 		Optional<GasBooking> optional=gasBookingRepo.findById(gasBookingId);
 		if(optional.isPresent()) {
@@ -57,7 +53,6 @@ public class GasBookingServiceImpl implements IGasBookingService{
 	}
 
 	@Override
-	@Transactional
 	public GasBooking getBill(int customerId) throws GasBookingNotFoundException {
 		Optional<GasBooking> optional=gasBookingRepo.findBycustomerId(customerId);
 		if(optional.isPresent()) {

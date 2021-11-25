@@ -29,8 +29,6 @@ public class SurrenderCylinder implements Serializable{
 	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
 	
-	private Customer customer;
-	
 	@JsonBackReference(value = "5")
 	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
 	private Cylinder cylinder;
@@ -41,11 +39,10 @@ public class SurrenderCylinder implements Serializable{
 		super();
 	}
 
-	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
+	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Cylinder cylinder) {
 		super();
 		this.surrenderId = surrenderId;
 		this.surrenderDate = surrenderDate;
-		this.customer = customer;
 		this.cylinder = cylinder;
 	}
 
@@ -67,14 +64,6 @@ public class SurrenderCylinder implements Serializable{
 		this.surrenderDate = surrenderDate;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public Cylinder getCylinder() {
 		return cylinder;
 	}
@@ -87,8 +76,7 @@ public class SurrenderCylinder implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", customer="
-				+ customer + ", cylinder=" + cylinder + "]";
+		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", cylinder=" + cylinder + "]";
 	}
 	
 }

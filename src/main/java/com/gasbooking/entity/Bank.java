@@ -31,6 +31,8 @@ public class Bank implements Serializable{
 	@Column(name = "bank_name")
 	private String bankName;
 	
+	private String address;
+	
 	@JsonBackReference(value = "2")
 	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
 	private Customer customer;
@@ -42,13 +44,14 @@ public class Bank implements Serializable{
 	}
 	
 	// getters and setters
-	
+
 	public Bank(int bankId,
 			@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.") String bankName,
-			Customer customer) {
+			String address, Customer customer) {
 		super();
 		this.bankId = bankId;
 		this.bankName = bankName;
+		this.address = address;
 		this.customer = customer;
 	}
 
@@ -75,13 +78,23 @@ public class Bank implements Serializable{
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	// toString
 	
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", customer=" + customer + "]";
+		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", address=" + address + ", customer=" + customer
+				+ "]";
 	}
+	
 }
 
 // developer - Tracy Lewis

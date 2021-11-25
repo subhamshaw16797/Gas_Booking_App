@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gasbooking.entity.Cylinder;
 import com.gasbooking.exception.CylinderNotFoundException;
@@ -18,14 +17,12 @@ public  class CylinderServiceImpl implements ICylinderService{
 	ICylinderRepository cylinderrepository;
 
 	@Override
-	@Transactional
 	public Cylinder insertCylinder(Cylinder cylinder) {
 		
 		return cylinderrepository.save(cylinder);
 	}
 
 	@Override
-	@Transactional
 	public Cylinder updateCylinder(Cylinder cylinder) throws CylinderNotFoundException  {
 		
         int CylinderId=cylinder.getcylinderId();
@@ -45,7 +42,6 @@ public  class CylinderServiceImpl implements ICylinderService{
 	}
 
 	@Override
-	@Transactional
 	public Cylinder deleteCylinder(int cylinderId) throws CylinderNotFoundException {
 		Optional<Cylinder> optional=cylinderrepository.findById(cylinderId);
 		if(optional.isPresent()) {
@@ -59,7 +55,6 @@ public  class CylinderServiceImpl implements ICylinderService{
 	}
 
 	@Override
-	@Transactional
 	public List<Cylinder> viewCylinderByType(String type) throws CylinderNotFoundException {
 		Optional<Cylinder> optional=cylinderrepository.findByType(type);
 		if(optional.isPresent()) {

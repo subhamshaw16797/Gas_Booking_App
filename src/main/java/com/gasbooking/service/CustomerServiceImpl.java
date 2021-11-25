@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gasbooking.entity.Customer;
 import com.gasbooking.exception.CustomerNotFoundException;
@@ -19,7 +18,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	ICustomerRepository customerRepository;
 
 	// inserting a single object
-	@Transactional
 	@Override
 	public Customer insertCustomer(Customer customer) {
 		
@@ -28,17 +26,16 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// updating a single object
-	@Transactional
 	@Override
-	public Customer updateCustomer(Customer customer) throws InputMismatchException, CustomerNotFoundException {
-		Integer getId = Integer.valueOf(customer.getId());
+	public Customer updateCustomer(int customerId, Customer customer) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
-			Optional<Customer> optional = customerRepository.findById(customer.getId());
+			Optional<Customer> optional = customerRepository.findById(getId);
 
 			if (optional.isPresent()) {
 				Customer gotCustomer = optional.get();
-				gotCustomer.setUserName(customer.getUserName());
+				gotCustomer.setUsername(customer.getUsername());
 				gotCustomer.setPassword(customer.getPassword());
 				gotCustomer.setAddress(customer.getAddress());
 				gotCustomer.setEmail(customer.getEmail());
@@ -48,6 +45,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				gotCustomer.setPan(customer.getPan());
 				gotCustomer.setBank(customer.getBank());
 				gotCustomer.setCylinder(customer.getCylinder());
+				gotCustomer.setGasBooking(customer.getGasBooking());
 				Customer updateCustomer = customerRepository.save(gotCustomer);
 				return updateCustomer;
 			}
@@ -62,9 +60,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// deleting a single object by id
-	@Transactional
 	@Override
-	public Customer deleteCustomer(int customerId) throws InputMismatchException, CustomerNotFoundException {
+	public Customer deleteCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 
 		Integer id = Integer.valueOf(customerId);
 
@@ -86,9 +83,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// getting list of object
-	@Transactional
 	@Override
-	public List<Customer> viewCustomers() throws InputMismatchException, CustomerNotFoundException {
+	public List<Customer> viewCustomers() throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 
 		List<Customer> getAllCustomer = customerRepository.findAll();
 		if (getAllCustomer.isEmpty()) {
@@ -98,9 +94,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	// getting a single object
-	@Transactional
 	@Override
-	public Customer viewCustomer(int customerId) throws NumberFormatException, CustomerNotFoundException {
+	public Customer viewCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
@@ -116,5 +111,24 @@ public class CustomerServiceImpl implements ICustomerService {
 			throw new NumberFormatException("ID should be a number type.");
 		}
 	}
+
+//	@Override
+//	public Customer validateCustomer(String username, String password) throws NullPointerException, NumberFormatException, InputMismatchException, CustomerNotFoundException {
+//		
+//		if((username != null) && (password != null)) {
+//			Customer validCustomer = customerRepository.findByUsernameAndPassword(username, password);
+//			
+//			if(validCustomer != null) {
+//				return validCustomer;
+//			}
+//			else {
+//				throw new CustomerNotFoundException("Username or password is not exist. please try again.");
+//			}
+//		}
+//		else {
+//			throw new NullPointerException("Please fill the username/password");
+//		}
+//		
+//	}
 
 }

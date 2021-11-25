@@ -7,5 +7,8 @@ import com.gasbooking.entity.Customer;
 
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
+	
+//	@Query("select c from Customer c where c.setUsername=:user and u.setPassword=:pass")
+//	public Customer findByUsernameAndPassword(@Param("user") String username, @Param("pass") String Password);
 
 }

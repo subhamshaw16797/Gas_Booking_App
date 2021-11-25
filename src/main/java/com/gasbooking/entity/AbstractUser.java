@@ -28,7 +28,7 @@ public class AbstractUser implements Serializable {
 	int id;
 
 	@Pattern(regexp = "[a-zA-Z0-9]*", message = "UserName should have atleast 8 characters")
-	String userName;
+	String username;
 
 	// password should not be null or empty
 	// password should have minimum 4 characters
@@ -56,13 +56,13 @@ public class AbstractUser implements Serializable {
 	}
 
 	public AbstractUser(
-			@Pattern(regexp = "[a-zA-Z0-9]*", message = "UserName should have atleast 8 characters") String userName,
+			@Pattern(regexp = "[a-zA-Z0-9]*", message = "UserName should have atleast 8 characters") String username,
 			@Pattern(regexp = "[a-zA-Z0-9@/!<>$#-_]*", message = "password should have atleast 4 characters") String password,
 			@Pattern(regexp = "[a-zA-Z0-9-_]*", message = "Should Provide proper address") String address,
 			@Pattern(regexp = "^[7-9][0-9]{9}", message = "mobile number should have atleast 10 characters") String mobileNumber,
 			@Pattern(regexp = "[a-zA-Z]{3,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", message = "email should have atleaz") String email) {
 		super();
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 		this.address = address;
 		this.mobileNumber = mobileNumber;
@@ -77,12 +77,12 @@ public class AbstractUser implements Serializable {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

@@ -26,35 +26,41 @@ import com.gasbooking.service.ICustomerService;
 public class CustomerController {
 
 	@Autowired
-	ICustomerService customerService;
+	ICustomerService customerSer;
 
 	@PostMapping("/addCustomer")
 	public ResponseEntity<?> insertCustomer(@Valid @RequestBody Customer customer) {
-		Customer addedCustomer = customerService.insertCustomer(customer);
+		Customer addedCustomer = customerSer.insertCustomer(customer);
 		return new ResponseEntity<Customer>(addedCustomer, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/updateCustomer")
-	public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) throws InputMismatchException, CustomerNotFoundException {
-		Customer updatedCustomer = customerService.updateCustomer(customer);
+	@PutMapping("/updateCustomer/{customerId}")
+	public ResponseEntity<?> updateCustomer(@PathVariable int customerId, @Valid @RequestBody Customer customer) throws InputMismatchException, CustomerNotFoundException {
+		Customer updatedCustomer = customerSer.updateCustomer(customerId, customer);
 		return new ResponseEntity<Customer>(updatedCustomer, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteCustomer/{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) throws InputMismatchException, CustomerNotFoundException {
-		Customer deletedCustomer = customerService.deleteCustomer(customerId);
+		Customer deletedCustomer = customerSer.deleteCustomer(customerId);
 		return new ResponseEntity<Customer>(deletedCustomer, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAllCustomer")
 	public ResponseEntity<?> viewCustomers() throws InputMismatchException, CustomerNotFoundException {
-		List<Customer> getAllCustomers = customerService.viewCustomers();
+		List<Customer> getAllCustomers = customerSer.viewCustomers();
 		return new ResponseEntity<List<Customer>>(getAllCustomers, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getSingleCustomer/{customerId}")
 	public ResponseEntity<?> viewCustomer(@PathVariable int customerId) throws InputMismatchException, CustomerNotFoundException {
-		Customer getSingleCustomer = customerService.viewCustomer(customerId);
+		Customer getSingleCustomer = customerSer.viewCustomer(customerId);
 		return new ResponseEntity<Customer>(getSingleCustomer, HttpStatus.OK);
 	}
+	
+//	@GetMapping("/validateUser")
+//	public ResponseEntity<?> validateCustomer(@RequestParam("user") String username, @RequestParam("pass") String password) throws NumberFormatException, InputMismatchException, NullPointerException, CustomerNotFoundException {
+//		Customer validCustomer = customerSer.validateCustomer(username, password);
+//		return new ResponseEntity<Customer>(validCustomer,HttpStatus.OK);
+//	}
 }

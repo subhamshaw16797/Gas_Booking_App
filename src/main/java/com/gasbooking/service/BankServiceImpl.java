@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gasbooking.entity.Bank;
 import com.gasbooking.exception.BankNotFoundException;
@@ -17,14 +16,12 @@ public class BankServiceImpl implements IBankService {
 	IBankRepository bankRepository;
 
 	@Override
-	@Transactional
 	public Bank insertBank(Bank bank) {
 
 		return bankRepository.save(bank);
 	}
 
 	@Override
-	@Transactional
 	public Bank updateBank(Bank bank) throws BankNotFoundException {
 		
 		int bankId = bank.getBankId();
@@ -34,6 +31,7 @@ public class BankServiceImpl implements IBankService {
 		if (optional.isPresent()) {
 			Bank b1 = optional.get();
 			b1.setBankName(bank.getBankName());
+			b1.setAddress(bank.getAddress());
 			Bank updatedBank = bankRepository.save(b1);
 			return updatedBank;
 		} else {
@@ -42,7 +40,6 @@ public class BankServiceImpl implements IBankService {
 	}
 
 	@Override
-	@Transactional
 	public Bank deleteBank(int bankId) throws BankNotFoundException {
 		
 		Optional<Bank> optional = bankRepository.findById(bankId);
