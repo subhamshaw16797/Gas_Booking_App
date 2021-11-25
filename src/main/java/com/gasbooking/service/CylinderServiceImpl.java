@@ -23,18 +23,17 @@ public  class CylinderServiceImpl implements ICylinderService{
 	}
 
 	@Override
-	public Cylinder updateCylinder(Cylinder cylinder) throws CylinderNotFoundException  {
+	public Cylinder updateCylinder(int cylinderId, Cylinder cylinder) throws CylinderNotFoundException  {
 		
-        int CylinderId=cylinder.getcylinderId();
-		
-		Optional<Cylinder> optional = cylinderrepository.findById(CylinderId);
+		Optional<Cylinder> optional = cylinderrepository.findById(cylinderId);
 		if(optional.isPresent()) {
 			Cylinder c1=optional.get();
 			c1.setType(cylinder.getType());
 			c1.setWeight(cylinder.getWeight());
 			c1.setStrapColor(cylinder.getStrapColor());
 			c1.setPrice(cylinder.getPrice());
-			return cylinder;
+			cylinderrepository.save(c1);
+			return c1;
 		}
 		else {
 			throw new CylinderNotFoundException("Cylinder details not found");
@@ -46,7 +45,7 @@ public  class CylinderServiceImpl implements ICylinderService{
 		Optional<Cylinder> optional=cylinderrepository.findById(cylinderId);
 		if(optional.isPresent()) {
 			Cylinder deletedCylinder=optional.get();
-			cylinderrepository.deleteById(cylinderId);
+			cylinderrepository.delete(deletedCylinder);
 			return deletedCylinder;
 		}
 		else {
@@ -56,9 +55,10 @@ public  class CylinderServiceImpl implements ICylinderService{
 
 	@Override
 	public List<Cylinder> viewCylinderByType(String type) throws CylinderNotFoundException {
-		Optional<Cylinder> optional=cylinderrepository.findByType(type);
+		Optional<List<Cylinder>> optional=cylinderrepository.findByType(type);
 		if(optional.isPresent()) {
-			return viewCylinderByType(null);
+			List<Cylinder> list = optional.get();
+			return list;
 	}
        else {
 	     throw new CylinderNotFoundException("Cylinder detalis not found");

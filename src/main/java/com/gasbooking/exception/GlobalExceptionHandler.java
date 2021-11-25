@@ -26,6 +26,13 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<?> adminNotFoundException(AdminNotFoundException ae, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ae.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public ResponseEntity<?> customerNotFoundException(CustomerNotFoundException ce, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ce.getMessage(),

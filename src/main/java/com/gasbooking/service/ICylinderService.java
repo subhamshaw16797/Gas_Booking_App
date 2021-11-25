@@ -9,7 +9,7 @@ public interface ICylinderService {
 	
 	public Cylinder insertCylinder(Cylinder cylinder);
 	
-    public Cylinder updateCylinder(Cylinder cylinder ) throws com.gasbooking.exception.CylinderNotFoundException;
+    public Cylinder updateCylinder(int cylinderId, Cylinder cylinder ) throws com.gasbooking.exception.CylinderNotFoundException;
     
     public Cylinder deleteCylinder(int cylinderId) throws CylinderNotFoundException ;
     

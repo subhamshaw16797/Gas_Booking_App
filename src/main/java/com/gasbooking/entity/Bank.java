@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -34,7 +33,7 @@ public class Bank implements Serializable{
 	private String address;
 	
 	@JsonBackReference(value = "2")
-	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
+//	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
 	private Customer customer;
 	
 	// constructors
@@ -47,12 +46,11 @@ public class Bank implements Serializable{
 
 	public Bank(int bankId,
 			@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.") String bankName,
-			String address, Customer customer) {
+			String address) {
 		super();
 		this.bankId = bankId;
 		this.bankName = bankName;
 		this.address = address;
-		this.customer = customer;
 	}
 
 	public int getBankId() {
@@ -91,8 +89,7 @@ public class Bank implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", address=" + address + ", customer=" + customer
-				+ "]";
+		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", address=" + address + "]";
 	}
 	
 }

@@ -6,9 +6,7 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.Id;import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -30,7 +28,7 @@ public class SurrenderCylinder implements Serializable{
 	private LocalDate surrenderDate;
 	
 	@JsonBackReference(value = "5")
-	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
+//	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
 	private Cylinder cylinder;
 	
 	// constructor

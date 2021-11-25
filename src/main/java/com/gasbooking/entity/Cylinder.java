@@ -41,7 +41,7 @@ public class Cylinder implements Serializable {
 	private double price;
 	
 	@JsonBackReference(value = "1")
-	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
+//	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
 	private Customer customer;
 	
 	@JsonManagedReference(value = "5")
@@ -63,50 +63,63 @@ public class Cylinder implements Serializable {
 		super();
 	}
 	
-	// getters and setters
-	
-	public int getcylinderId() {
+	public int getCylinderId() {
 		return cylinderId;
 	}
-	
+
+	public void setCylinderId(int cylinderId) {
+		this.cylinderId = cylinderId;
+	}
+
 	public String getType() {
 		return type;
 	}
-	
-	public double getWeight() {
-		return weight;
-	}
-	
-	public String getStrapColor() {
-		return strapColor;
-	}
-	
-	public double getPrice() {
-		return price;
-	}
-	
-	//setters
-	public void setCylinderId(int cylinderId) {
-		this.cylinderId=cylinderId;
-	}
-	
+
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
+	public double getWeight() {
+		return weight;
+	}
+
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	
+
+	public String getStrapColor() {
+		return strapColor;
+	}
+
 	public void setStrapColor(String strapColor) {
 		this.strapColor = strapColor;
 	}
-	
+
+	public double getPrice() {
+		return price;
+	}
+
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-    //ToString
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public SurrenderCylinder getSurrenderCylinder() {
+		return surrenderCylinder;
+	}
+
+	public void setSurrenderCylinder(SurrenderCylinder surrenderCylinder) {
+		this.surrenderCylinder = surrenderCylinder;
+	}
+
+	//ToString
 	
 	@Override
 	public String toString() {
