@@ -3,6 +3,8 @@ package com.gasbooking.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,19 @@ public  class CylinderServiceImpl implements ICylinderService{
 	@Autowired
 	ICylinderRepository cylinderrepository;
 
+	Logger logger=LoggerFactory.getLogger(CylinderServiceImpl.class);
+	
 	@Override
 	public Cylinder insertCylinder(Cylinder cylinder) {
+		logger.info("****************Inserting cylinder Details****************");
 		
 		return cylinderrepository.save(cylinder);
 	}
 
 	@Override
 	public Cylinder updateCylinder(int cylinderId, Cylinder cylinder) throws CylinderNotFoundException  {
+		
+		logger.info("****************updating cylinder Details****************");
 		
 		Optional<Cylinder> optional = cylinderrepository.findById(cylinderId);
 		if(optional.isPresent()) {
@@ -42,6 +49,8 @@ public  class CylinderServiceImpl implements ICylinderService{
 
 	@Override
 	public Cylinder deleteCylinder(int cylinderId) throws CylinderNotFoundException {
+		logger.info("****************deleting cylinder Details****************");
+
 		Optional<Cylinder> optional=cylinderrepository.findById(cylinderId);
 		if(optional.isPresent()) {
 			Cylinder deletedCylinder=optional.get();
@@ -55,6 +64,10 @@ public  class CylinderServiceImpl implements ICylinderService{
 
 	@Override
 	public List<Cylinder> viewCylinderByType(String type) throws CylinderNotFoundException {
+		
+		logger.info("****************Getting cylinder by type Details****************");
+
+		
 		Optional<List<Cylinder>> optional=cylinderrepository.findByType(type);
 		if(optional.isPresent()) {
 			List<Cylinder> list = optional.get();

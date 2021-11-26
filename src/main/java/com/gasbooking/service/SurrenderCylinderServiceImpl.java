@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.hibernate.service.spi.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gasbooking.entity.SurrenderCylinder;
@@ -15,15 +17,22 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 
 	@Autowired
 	ISurrenderCylinderRepository surrendercylinderrepository;
+	
+	Logger logger=LoggerFactory.getLogger(SurrenderCylinderServiceImpl.class);
 
 	@Override
 	public SurrenderCylinder insertSurrenderCylinder(SurrenderCylinder sc) {
+
+		logger.info("****************Inserting SurrenderCylinder Details****************");
 
 		return surrendercylinderrepository.save(sc);
 	}
 
 	@Override
 	public SurrenderCylinder updateSurrenderCylinder(int surrenderCylinderId, SurrenderCylinder sc) {
+		
+		logger.info("****************Updating SurrenderCylinder Details****************");
+
 		Supplier s1 = () -> new ServiceException("Given Id is not found in the Database");
 		SurrenderCylinder g1 = null;
 		try {
@@ -39,6 +48,9 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 
 	@Override
 	public SurrenderCylinder deleteSurrenderCylinder(int surrenderCylinderId) throws CylinderNotFoundException {
+		
+		logger.info("****************Deleting SurrenderCylinder Details****************");
+
 		Optional<SurrenderCylinder> optional = surrendercylinderrepository.findById(surrenderCylinderId);
 		
 		if(optional.isPresent()) {
@@ -54,6 +66,8 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 
 	@Override
 	public int CountSurrenderCylinders() {
+
+		logger.info("****************Getting SurrenderCylinder Count****************");
 
 		return (int) this.surrendercylinderrepository.count();
 	}

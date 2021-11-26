@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,14 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	ICustomerRepository customerRepository;
+	
+	Logger logger=LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 	// inserting a single object
 	@Override
 	public Customer insertCustomer(Customer customer) {
+		
+		logger.info("****************Inserting customer Details****************");
 		
 		Customer insertedCustomer = customerRepository.save(customer);
 		return insertedCustomer;
@@ -28,6 +34,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	// updating a single object
 	@Override
 	public Customer updateCustomer(int customerId, Customer customer) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+		
+		logger.info("****************updating Customer Details****************");
+		
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
@@ -63,6 +72,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer deleteCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 
+		logger.info("****************Deleting Customer Details****************");
+		
 		Integer id = Integer.valueOf(customerId);
 
 		if (id instanceof Integer) {
@@ -86,6 +97,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public List<Customer> viewCustomers() throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 
+		logger.info("****************Getting All Customers Details****************");
+		
 		List<Customer> getAllCustomer = customerRepository.findAll();
 		if (getAllCustomer.isEmpty()) {
 			throw new CustomerNotFoundException("There are no such customer present in the database.");
@@ -96,6 +109,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	// getting a single object
 	@Override
 	public Customer viewCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+		
+		logger.info("****************Getting Single customer Details****************");
+		
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
@@ -114,6 +130,8 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Customer validateCustomer(String username, String password) throws NullPointerException, NumberFormatException, InputMismatchException, CustomerNotFoundException {
+		
+		logger.info("****************Validating the customer username and password****************");
 		
 		if(username!=null) {
 			if(password!=null) {

@@ -2,6 +2,8 @@ package com.gasbooking.service;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,12 @@ public class BankServiceImpl implements IBankService {
 	@Autowired
 	IBankRepository bankRepository;
 
+	Logger logger=LoggerFactory.getLogger(BankServiceImpl.class);
+	
 	@Override
 	public Bank insertBank(Bank bank) {
+
+		logger.info("****************Inserting Bank Details****************");
 
 		return bankRepository.save(bank);
 	}
@@ -24,6 +30,8 @@ public class BankServiceImpl implements IBankService {
 	@Override
 	public Bank updateBank(int bankId, Bank bank) throws BankNotFoundException {
 		
+		logger.info("****************Updating Bank Details****************");
+
 		Optional<Bank> optional = bankRepository.findById(bankId);
 		
 		if (optional.isPresent()) {
@@ -40,6 +48,8 @@ public class BankServiceImpl implements IBankService {
 	@Override
 	public Bank deleteBank(int bankId) throws BankNotFoundException {
 		
+		logger.info("****************Deleting Bank Details****************");
+
 		Optional<Bank> optional = bankRepository.findById(bankId);
 		
 		if (optional.isPresent()) {
