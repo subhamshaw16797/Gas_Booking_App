@@ -27,12 +27,12 @@ public class AbstractUser implements Serializable {
 	@Column(name = "id")
 	int id;
 
-	@Pattern(regexp = "[a-zA-Z0-9]*", message = "UserName should have atleast 8 characters")
+	@Pattern(regexp = "[a-zA-Z0-9]{8,}", message = "UserName should have atleast 8 characters")
 	String username;
 
 	// password should not be null or empty
 	// password should have minimum 4 characters
-	@Pattern(regexp = "[a-zA-Z0-9@/!<>$#-_]*", message = "password should have atleast 4 characters")
+	@Pattern(regexp = "[a-zA-Z0-9@/!<>$#-_]{4,}", message = "password should have atleast 4 characters")
 	String password;
 
 	// address should not be null or empty

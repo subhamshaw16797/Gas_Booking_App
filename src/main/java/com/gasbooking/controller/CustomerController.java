@@ -59,7 +59,7 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(getSingleCustomer, HttpStatus.OK);
 	}
 	
-	@GetMapping("/validateUser")
+	@GetMapping("/validateCustomer")
 	public ResponseEntity<?> validateCustomer(@RequestParam("user") String username, @RequestParam("pass") String password) throws NumberFormatException, InputMismatchException, NullPointerException, CustomerNotFoundException {
 		Customer validCustomer = customerSer.validateCustomer(username, password);
 		return new ResponseEntity<Customer>(validCustomer,HttpStatus.OK);

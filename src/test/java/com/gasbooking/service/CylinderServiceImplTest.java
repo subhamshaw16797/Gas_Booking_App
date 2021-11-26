@@ -43,6 +43,7 @@ import com.gasbooking.repository.ICylinderRepository;
 		}
 		@Test
 		void testUpdateCylinder() throws CylinderNotFoundException {
+			int id = 1;
 			Cylinder c1=new Cylinder();
 			Customer c=new Customer();
 			SurrenderCylinder s=new SurrenderCylinder();
@@ -59,7 +60,7 @@ import com.gasbooking.repository.ICylinderRepository;
 			 c1.setSurrenderCylinder(s);
 			 c1.setWeight(18);
 			 c1.setPrice(1150);
-			 assertThat(service.updateCylinder(20, c1)).isEqualTo(c1);
+			 assertThat(service.updateCylinder(id, c1)).isEqualTo(c1);
 		}
 		@Test
 		void testDeleteCylinder() throws CylinderNotFoundException {
