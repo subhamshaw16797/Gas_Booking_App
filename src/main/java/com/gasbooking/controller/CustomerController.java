@@ -64,4 +64,6 @@ public class CustomerController {
 		Customer validCustomer = customerSer.validateCustomer(username, password);
 		return new ResponseEntity<Customer>(validCustomer,HttpStatus.OK);
 	}
+	
+	
 }

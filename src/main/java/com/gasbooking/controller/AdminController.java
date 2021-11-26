@@ -22,47 +22,47 @@ import com.gasbooking.entity.Admin;
 import com.gasbooking.entity.GasBooking;
 import com.gasbooking.exception.AdminNotFoundException;
 import com.gasbooking.exception.CustomerNotFoundException;
+import com.gasbooking.exception.GasBookingNotFoundException;
 import com.gasbooking.service.IAdminService;
 
 @RestController
-@RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired
 	IAdminService adminService;
 	
 
-	@PostMapping("/insert")
+	@PostMapping("/admin/insert")
 	public ResponseEntity<Admin> insertAdmin(@Valid @RequestBody Admin admin) {
 		Admin serviceAdmin = adminService.insertAdmin(admin);
 		return new ResponseEntity<>(serviceAdmin, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update/{adminId}")
+	@PutMapping("/admin/update/{adminId}")
 	public ResponseEntity<Admin> updateAdmin(@PathVariable int adminId,@Valid @RequestBody Admin admin) throws AdminNotFoundException, Exception {
 		
 		Admin serviceAdmin = adminService.updateAdmin(adminId,admin);
 		return new ResponseEntity<>(serviceAdmin, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{adminId}")
+	@DeleteMapping("/admin/delete/{adminId}")
 	public ResponseEntity<Admin> deleteAdmin(@PathVariable int adminId) throws AdminNotFoundException, Exception {
 		
 		Admin serviceAdmin = adminService.deleteAdmin(adminId);
 		return new ResponseEntity<>(serviceAdmin, HttpStatus.OK);
 	}
 
-//	@GetMapping("/customer/getBookings")
-//	public ResponseEntity<List<GasBooking>> getAllBookings(@RequestParam int customerId) throws CustomerNotFoundException {
-//		List<GasBooking> serviceGasBookings = adminService.getAllBookings(customerId);
-//		return new ResponseEntity<List<GasBooking>>(serviceGasBookings, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("/customer/getBookings/betweenDays")
-//	public ResponseEntity<List<GasBooking>> getAllBookingsForDays(@RequestParam int customerId,@RequestBody LocalDate fromDate,
-//			@RequestBody LocalDate toDate) {
-//		List<GasBooking> servicebookingBetweenDays = adminService.getAllBookingsForDays(customerId, fromDate, toDate);
-//		return new ResponseEntity<List<GasBooking>>(servicebookingBetweenDays, HttpStatus.OK);
-//	}
+	@GetMapping("admin/customer/getBookings")
+	public ResponseEntity<List<GasBooking>> getAllBookings(@RequestParam int customerId) throws CustomerNotFoundException {
+		List<GasBooking> serviceGasBookings = adminService.getAllBookings(customerId);
+		return new ResponseEntity<List<GasBooking>>(serviceGasBookings, HttpStatus.OK);
+	}
+
+	@GetMapping("admin/customer/getBookings/betweenDays/")
+	public ResponseEntity<List<GasBooking>> getAllBookingsForDays(@RequestParam("customerId") int customerId,@RequestParam("fromDate") LocalDate fromDate,
+			@RequestParam("toDate") LocalDate toDate) throws GasBookingNotFoundException {
+		List<GasBooking> servicebookingBetweenDays = adminService.getAllBookingsForDays(customerId, fromDate, toDate);
+		return new ResponseEntity<List<GasBooking>>(servicebookingBetweenDays, HttpStatus.OK);
+	}
 
 }

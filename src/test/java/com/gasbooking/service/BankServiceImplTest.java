@@ -1,6 +1,7 @@
 package com.gasbooking.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.gasbooking.entity.Bank;
+import com.gasbooking.entity.Customer;
 import com.gasbooking.exception.BankNotFoundException;
 import com.gasbooking.repository.IBankRepository;
 
@@ -24,7 +26,9 @@ public class BankServiceImplTest {
 	void testInsertBank() {
 		
 		Bank b1=new Bank();
-		b1.setBankId(1323);
+		Customer c=new Customer();
+		b1.setBankId(3);
+		b1.setCustomer(c);
 		b1.setBankName("ICICI");
 		b1.setAddress("msg");
 	
@@ -34,29 +38,30 @@ public class BankServiceImplTest {
 	@Test
 	void testUpdateBank() throws BankNotFoundException{
 		Bank b1=new Bank();
-		b1.setBankId(1323);
+		Customer c=new Customer();
+		b1.setBankId(3);
+		b1.setCustomer(c);
 		b1.setBankName("ICICI");
 		b1.setAddress("msg");
 		Optional<Bank> b2=Optional.of(b1);
-		Mockito.when(bankRepository.findById(1323)).thenReturn(b2);
+		Mockito.when(bankRepository.findById(1)).thenReturn(b2);
 		Mockito.when(bankRepository.save(b1)).thenReturn(b1);
-		b1.setBankId(1424);
+		b1.setBankId(1);
+		b1.setCustomer(c);
 		b1.setBankName("AXIS");
 		b1.setAddress("Udupi");
-		assertThat(bankService.updateBank(b1)).isEqualTo(b1);
+		assertThat(bankService.updateBank(3, b1)).isEqualTo(b1);
 	}
 	@Test
-	void testDeleteBank() throws BankNotFoundException{
+      void testDeleteBank() throws BankNotFoundException{
 		Bank b1=new Bank();
-		b1.setBankId(1424);
+		Customer c=new Customer();
+		b1.setBankId(1);
 		b1.setBankName("AXIS");
 		b1.setAddress("Udupi");
+		b1.setCustomer(c);
 		Optional<Bank> b2=Optional.of(b1);
 		Mockito.when(bankRepository.findById(1424)).thenReturn(b2);
 		assertThat(bankService.deleteBank(1424)).isEqualTo(b1);
 	}
-		
-		
-		
-
 }
