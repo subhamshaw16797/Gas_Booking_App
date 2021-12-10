@@ -1,4 +1,4 @@
-package com.gasbooking.entity;
+ package com.gasbooking.entity;
 
 import java.io.Serializable;
 

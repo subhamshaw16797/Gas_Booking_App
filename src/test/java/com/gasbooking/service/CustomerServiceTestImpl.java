@@ -23,7 +23,6 @@ import com.gasbooking.entity.GasBooking;
 import com.gasbooking.entity.SurrenderCylinder;
 import com.gasbooking.exception.CustomerNotFoundException;
 import com.gasbooking.repository.ICustomerRepository;
-import com.gasbooking.service.ICustomerService;
 
 
 @SpringBootTest
@@ -323,16 +322,16 @@ public class CustomerServiceTestImpl {
 	@Test
 	public void validateCustomerTest() {
 		
-		String userName="SubhamKumar1234";
+		String username="SubhamKumar1234";
 		String password="Subham@1234";
 		
 		Customer c=new Customer();
-		c.setUsername(userName);
+		c.setUsername(username);
 		c.setPassword(password);
 		
-		when(customerRepository.findByUsernameAndPassword(userName, password)).thenReturn(c);
+		when(customerRepository.findByUsernameAndPassword(username, password)).thenReturn(c);
 		try {
-			assertEquals(c, customerService.validateCustomer(userName, password));
+			assertEquals(c, customerService.validateCustomer(username, password));
 		} catch (NumberFormatException | InputMismatchException | NullPointerException | CustomerNotFoundException e) {
 			e.printStackTrace();
 		}	

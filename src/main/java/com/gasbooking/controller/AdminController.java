@@ -52,7 +52,7 @@ public class AdminController {
 	}
 
 	@GetMapping("admin/customer/getBookings")
-	public ResponseEntity<List<GasBooking>> getAllBookings(@RequestParam int customerId) throws CustomerNotFoundException {
+	public ResponseEntity<List<GasBooking>> getAllBookings(@RequestParam("id") int customerId) throws CustomerNotFoundException {
 		List<GasBooking> serviceGasBookings = adminService.getAllBookings(customerId);
 		return new ResponseEntity<List<GasBooking>>(serviceGasBookings, HttpStatus.OK);
 	}

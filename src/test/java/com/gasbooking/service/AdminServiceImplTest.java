@@ -20,8 +20,6 @@ import com.gasbooking.exception.CustomerNotFoundException;
 import com.gasbooking.exception.GasBookingNotFoundException;
 import com.gasbooking.repository.IAdminRepository;
 import com.gasbooking.repository.IGasBookingRepository;
-import com.gasbooking.service.IAdminService;
-import com.gasbooking.service.IGasBookingService;
 
 @SpringBootTest
 public class AdminServiceImplTest {
