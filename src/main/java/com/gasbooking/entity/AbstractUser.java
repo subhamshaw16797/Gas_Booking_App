@@ -12,6 +12,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user_details")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,48 +27,54 @@ public class AbstractUser implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	int id;
+	private int id;
 
 	@Pattern(regexp = "[a-zA-Z0-9]{3,}", message = "UserName should have atleast 3 characters")
-	String username;
+	private String username;
 
 	// password should not be null or empty
 	// password should have minimum 4 characters
 	@Pattern(regexp = "[a-zA-Z0-9@/!<>$#-_]{4,}", message = "password should have atleast 4 characters")
-	String password;
-
+	private String password;
+	
 	// address should not be null or empty
 	// address should have minimum 8 characters
 	@Pattern(regexp = "[a-zA-Z0-9-_/]{8,}", message = "Should Provide proper address")
-	String address;
-
+	private String address;
+	
 	// mobileNumber should not be null or empty
 	// mobileNumber should have 10 characters
 	@Pattern(regexp = "^[7-9][0-9]{9}", message = "mobile number should have only 10 characters")
-	String mobileNumber;
-
-	// mobileNumber should not be null or empty
-	// mobileNumber should have minimun 8 characters
-
+	private String mobileNumber;
+	
 	@Pattern(regexp = "[a-zA-Z]{3,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", message = "Please Provide the valid format of email")
-	String email;
+	private String email;
+		
+	private String role;
+	
+	@JsonIgnore
+	private boolean isLoggedIn = false;
 
 	public AbstractUser() {
 		super();
 	}
 
 	public AbstractUser(
-			@Pattern(regexp = "[a-zA-Z0-9]*", message = "Username should have atleast 8 characters") String username,
-			@Pattern(regexp = "[a-zA-Z0-9@/!<>$#-_]*", message = "password should have atleast 4 characters") String password,
-			@Pattern(regexp = "[a-zA-Z0-9-_]*", message = "Should Provide proper address") String address,
-			@Pattern(regexp = "^[7-9][0-9]{9}", message = "mobile number should have atleast 10 characters") String mobileNumber,
-			@Pattern(regexp = "[a-zA-Z]{3,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", message = "email should have atleaz") String email) {
+			@Pattern(regexp = "[a-zA-Z0-9]{3,}", message = "UserName should have atleast 3 characters") String username,
+			@Pattern(regexp = "[a-zA-Z0-9@/!<>$#-_]{4,}", message = "password should have atleast 4 characters") String password,
+			@Pattern(regexp = "[a-zA-Z0-9-_/]{8,}", message = "Should Provide proper address") String address,
+			@Pattern(regexp = "^[7-9][0-9]{9}", message = "mobile number should have only 10 characters") String mobileNumber,
+			@Pattern(regexp = "[a-zA-Z]{3,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", message = "Please Provide the valid format of email") String email,
+			String role, boolean isLoggedIn) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.address = address;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
+		this.role = role;
+		this.isLoggedIn = isLoggedIn;
 	}
 
 	public int getId() {
@@ -115,6 +123,22 @@ public class AbstractUser implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
 	}
 
 }

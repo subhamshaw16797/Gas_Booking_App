@@ -30,8 +30,8 @@ public class Admin extends AbstractUser implements Serializable {
 		super();
 	}
 
-	public Admin(String userName, String password, String address, String mobileNumber, String email) {
-		super(userName, password, address, mobileNumber, email);
+	public Admin(String username, String password, String address, String mobileNumber, String email, String role, boolean isLoggedIn) {
+		super(username, password, address, mobileNumber, email, role, isLoggedIn);
 	}
 
 	/*

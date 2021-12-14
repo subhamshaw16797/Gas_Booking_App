@@ -18,25 +18,39 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	ICustomerRepository customerRepository;
-	
-	Logger logger=LoggerFactory.getLogger(CustomerServiceImpl.class);
+
+	Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 	// inserting a single object
 	@Override
-	public Customer insertCustomer(Customer customer) {
-		
+	public Customer insertCustomer(Customer customer) throws CustomerNotFoundException {
+
 		logger.info("****************Inserting customer Details****************");
-		
+
+		String gotRole = customer.getRole();
+
+		if (gotRole.equalsIgnoreCase("Customer")) {
+			// checking existing username in database
+			String userName = customer.getUsername();
+			Optional<Customer> userNameOptional = customerRepository.findByUsername(userName);
+
+			if (userNameOptional.isPresent()) {
+				throw new CustomerNotFoundException(
+						"Given username is already exist in database. Please give different username.");
+			}
+		}
+
 		Customer insertedCustomer = customerRepository.save(customer);
 		return insertedCustomer;
 	}
 
 	// updating a single object
 	@Override
-	public Customer updateCustomer(int customerId, Customer customer) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
-		
+	public Customer updateCustomer(int customerId, Customer customer)
+			throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+
 		logger.info("****************updating Customer Details****************");
-		
+
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
@@ -70,10 +84,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// deleting a single object by id
 	@Override
-	public Customer deleteCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+	public Customer deleteCustomer(int customerId)
+			throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 
 		logger.info("****************Deleting Customer Details****************");
-		
+
 		Integer id = Integer.valueOf(customerId);
 
 		if (id instanceof Integer) {
@@ -95,10 +110,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// getting list of object
 	@Override
-	public List<Customer> viewCustomers() throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+	public List<Customer> viewCustomers()
+			throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
 
 		logger.info("****************Getting All Customers Details****************");
-		
+
 		List<Customer> getAllCustomer = customerRepository.findAll();
 		if (getAllCustomer.isEmpty()) {
 			throw new CustomerNotFoundException("There are no such customer present in the database.");
@@ -108,10 +124,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	// getting a single object
 	@Override
-	public Customer viewCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
-		
+	public Customer viewCustomer(int customerId)
+			throws NumberFormatException, InputMismatchException, CustomerNotFoundException {
+
 		logger.info("****************Getting Single customer Details****************");
-		
+
 		Integer getId = Integer.valueOf(customerId);
 
 		if (getId instanceof Integer) {
@@ -129,28 +146,45 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer validateCustomer(String username, String password) throws NullPointerException, NumberFormatException, InputMismatchException, CustomerNotFoundException {
-		
+	public Customer validateCustomer(Customer customer)
+			throws CustomerNotFoundException {
+
 		logger.info("****************Validating the customer username and password****************");
-		
-		if(username!=null) {
-			if(password!=null) {
-				Customer validCustomer = customerRepository.findByUsernameAndPassword(username, password);
-				if(validCustomer != null) {
-					return validCustomer;
-				}
-				else {
-					throw new CustomerNotFoundException("Username or password is not exist. please try again.");
-				}
+
+		Optional<Customer> optional = customerRepository.findByUsername(customer.getUsername());
+		System.out.println(optional);
+		if (optional.isPresent()) {
+			Customer validCustomer = optional.get();
+			if (customer.getUsername().equalsIgnoreCase(validCustomer.getUsername())
+					&& (customer.getPassword().equalsIgnoreCase(validCustomer.getPassword()))
+					&& (customer.getRole().equalsIgnoreCase(validCustomer.getRole()))) {
+				validCustomer.setLoggedIn(true);
+				
+				// update isLoggedIn flag to true
+				customerRepository.save(validCustomer);
+				return validCustomer;
 			}
 			else {
-				throw new CustomerNotFoundException("Please provide the password.");
+				throw new CustomerNotFoundException("Given username or password is wrong.");
 			}
 		}
-		else {
-			throw new CustomerNotFoundException("Please provide the username.");
+		 else {
+			throw new CustomerNotFoundException("Given username or password not exist");
+		}
+	}
+
+	@Override
+	public Customer logout(String username) throws CustomerNotFoundException {
+		
+		Optional<Customer> optional = customerRepository.findByUsername(username);
+		if(!(optional.isPresent())) {
+			throw new CustomerNotFoundException("Invalid username");
 		}
 		
+		Customer getCustomer = optional.get();
+		getCustomer.setLoggedIn(false);
+		customerRepository.save(getCustomer);
+		return getCustomer;
 	}
 
 }

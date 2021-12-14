@@ -1,6 +1,7 @@
 package com.gasbooking.service;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gasbooking.entity.Admin;
+import com.gasbooking.entity.Customer;
 import com.gasbooking.entity.GasBooking;
 import com.gasbooking.exception.AdminNotFoundException;
 import com.gasbooking.exception.CustomerNotFoundException;
@@ -30,8 +32,15 @@ public class AdminServiceImpl implements IAdminService {
 	
 	
 	@Override
-	public Admin insertAdmin(Admin admin) {
+	public Admin insertAdmin(Admin admin) throws AdminNotFoundException {
 		logger.info("***********Inserting Admin Details*********************");
+		
+		String userName = admin.getUsername();
+		Optional<Admin> optional = adminDao.findByUsername(userName);
+		
+		if(optional.isPresent()) {
+			throw new AdminNotFoundException("Given username is already present in the database. Please give different username");
+		}
 		
 		return adminDao.save(admin);
 
@@ -112,6 +121,36 @@ public class AdminServiceImpl implements IAdminService {
 		} else {
 			return gasBookingDao.getAllBookingsForDays(customerId, fromDate, toDate);
 		}
+	}
+	
+	@Override
+	public Admin validateAdmin(String username, String password, String role) throws NullPointerException, NumberFormatException, InputMismatchException, AdminNotFoundException {
+		
+		logger.info("****************Validating the customer username and password****************");
+		
+		if(role.equalsIgnoreCase("Customer")){
+			if(username!=null) {
+				if(password!=null) {
+					Admin validAdmin = adminDao.findByUsernameAndPassword(username, password);
+					if(validAdmin != null) {
+						return validAdmin;
+					}
+					else {
+						throw new AdminNotFoundException("Username or password is not exist. please try again.");
+					}
+				}
+				else {
+					throw new AdminNotFoundException("Please provide the password.");
+				}
+			}
+			else {
+				throw new AdminNotFoundException("Please provide the username.");
+			}
+		}
+		else {
+			throw new AdminNotFoundException("Given Admin is not present.");
+		}
+		
 	}
 
 }

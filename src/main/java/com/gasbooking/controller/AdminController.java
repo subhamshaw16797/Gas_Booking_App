@@ -1,6 +1,7 @@
 package com.gasbooking.controller;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class AdminController {
 	
 
 	@PostMapping("/admin/insert")
-	public ResponseEntity<Admin> insertAdmin(@Valid @RequestBody Admin admin) {
+	public ResponseEntity<Admin> insertAdmin(@Valid @RequestBody Admin admin) throws AdminNotFoundException {
 		Admin serviceAdmin = adminService.insertAdmin(admin);
 		return new ResponseEntity<>(serviceAdmin, HttpStatus.CREATED);
 	}
@@ -64,4 +65,9 @@ public class AdminController {
 		return new ResponseEntity<List<GasBooking>>(servicebookingBetweenDays, HttpStatus.OK);
 	}
 
+	@GetMapping("/validateAdmin")
+	public ResponseEntity<?> validateCustomer(@RequestParam("user") String username, @RequestParam("pass") String password, @RequestParam("role") String role) throws NumberFormatException, InputMismatchException, NullPointerException, AdminNotFoundException {
+		Admin validAdmin = adminService.validateAdmin(username, password, role);
+		return new ResponseEntity<Admin>(validAdmin,HttpStatus.OK);
+	}
 }

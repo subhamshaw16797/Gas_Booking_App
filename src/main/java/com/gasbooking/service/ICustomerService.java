@@ -8,7 +8,7 @@ import com.gasbooking.exception.CustomerNotFoundException;
 
 public interface ICustomerService {
 
-	public Customer insertCustomer(Customer customer);
+	public Customer insertCustomer(Customer customer) throws CustomerNotFoundException;
 
 	public Customer updateCustomer(int customerId, Customer customer) throws NumberFormatException, InputMismatchException, CustomerNotFoundException;
 
@@ -18,5 +18,7 @@ public interface ICustomerService {
 
 	public Customer viewCustomer(int customerId) throws NumberFormatException, InputMismatchException, CustomerNotFoundException;
 	
-	public Customer validateCustomer(String username, String password) throws NullPointerException, NumberFormatException, InputMismatchException, CustomerNotFoundException;
+	public Customer validateCustomer(Customer customer) throws CustomerNotFoundException;
+	
+	public Customer logout(String username) throws CustomerNotFoundException;
 }

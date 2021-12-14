@@ -44,9 +44,14 @@ public class AdminServiceImplTest {
 		admin.setEmail("Mola@gmail.com");
 		admin.setMobileNumber("9898987653");
 		admin.setPassword("Mola123456");
-		admin.setUsername("MolaMola123");		
+		admin.setUsername("MolaMola123");
+		admin.setRole("Admin");
 		when(adminRepository.save(admin)).thenReturn(admin);
-		assertEquals(admin,adminService.insertAdmin(admin) );
+		try {
+			assertEquals(admin,adminService.insertAdmin(admin) );
+		} catch (AdminNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
