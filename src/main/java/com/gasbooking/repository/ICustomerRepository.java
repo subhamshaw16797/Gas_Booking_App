@@ -16,6 +16,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 //	public Optional<Customer> findByUsernameAndPassword(@Param("user") String username, @Param("pass") String Password);
 	
 //	@Query(value="select * from user_details where username=:name", nativeQuery=true )
+	
+	
 	public Optional<Customer> findByUsername(String username);
 
 }

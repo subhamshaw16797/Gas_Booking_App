@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gasbooking.entity.Admin;
-import com.gasbooking.entity.Customer;
 import com.gasbooking.entity.GasBooking;
 import com.gasbooking.exception.AdminNotFoundException;
 import com.gasbooking.exception.CustomerNotFoundException;

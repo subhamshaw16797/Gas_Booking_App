@@ -52,7 +52,6 @@ public class AbstractUser implements Serializable {
 		
 	private String role;
 	
-	@JsonIgnore
 	private boolean isLoggedIn = false;
 
 	public AbstractUser() {
@@ -67,7 +66,6 @@ public class AbstractUser implements Serializable {
 			@Pattern(regexp = "[a-zA-Z]{3,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", message = "Please Provide the valid format of email") String email,
 			String role, boolean isLoggedIn) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.address = address;
