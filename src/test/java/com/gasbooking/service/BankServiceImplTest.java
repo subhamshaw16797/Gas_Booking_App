@@ -31,6 +31,8 @@ public class BankServiceImplTest {
 		b1.setCustomer(c);
 		b1.setBankName("ICICI");
 		b1.setAddress("msg");
+		b1.setIfscNo("ABCD0122344");
+		b1.setPan("IORPS5530A");
 	
 	Mockito.when(bankRepository.save(b1)).thenReturn(b1);
 	assertThat(bankService.insertBank(b1)).isEqualTo(b1);

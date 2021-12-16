@@ -38,6 +38,9 @@ public class BankServiceImpl implements IBankService {
 			Bank b1 = optional.get();
 			b1.setBankName(bank.getBankName());
 			b1.setAddress(bank.getAddress());
+			b1.setAccountNo(bank.getAccountNo());
+			b1.setIfscNo(bank.getIfscNo());
+			b1.setPan(bank.getPan());
 			Bank updatedBank = bankRepository.save(b1);
 			return updatedBank;
 		} else {

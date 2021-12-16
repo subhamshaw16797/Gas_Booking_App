@@ -63,9 +63,6 @@ public class CustomerServiceImpl implements ICustomerService {
 				gotCustomer.setAddress(customer.getAddress());
 				gotCustomer.setEmail(customer.getEmail());
 				gotCustomer.setMobileNumber(customer.getMobileNumber());
-				gotCustomer.setAccountNo(customer.getAccountNo());
-				gotCustomer.setIfscNo(customer.getIfscNo());
-				gotCustomer.setPan(customer.getPan());
 				gotCustomer.setBank(customer.getBank());
 				gotCustomer.setCylinder(customer.getCylinder());
 				gotCustomer.setGasBooking(customer.getGasBooking());

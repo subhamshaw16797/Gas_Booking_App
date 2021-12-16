@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gasbooking.entity.Admin;
-import com.gasbooking.entity.Customer;
 
 @Repository
 public interface IAdminRepository extends JpaRepository<Admin,Integer>{
