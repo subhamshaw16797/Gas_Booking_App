@@ -2,17 +2,14 @@
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "cylinder")
@@ -44,8 +41,8 @@ public class Cylinder implements Serializable {
 //	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
 	private Customer customer;
 	
-	@JsonManagedReference(value = "5")
-	@OneToOne(targetEntity = SurrenderCylinder.class, cascade = CascadeType.ALL)
+	@JsonBackReference(value = "5")
+//	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
 	private SurrenderCylinder surrenderCylinder;
 	
 	// constructor

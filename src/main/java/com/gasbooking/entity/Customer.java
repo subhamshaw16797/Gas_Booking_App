@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -37,6 +38,10 @@ public class Customer extends AbstractUser implements Serializable {
 	@OneToOne(targetEntity = Cylinder.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "cylinder_id")
 	private Cylinder cylinder;
+	
+	@JsonBackReference(value = "6")
+//	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
+	private SurrenderCylinder surrenderCylinder;
 	
 	@JsonManagedReference("4")
 	@OneToMany(targetEntity = GasBooking.class, cascade = CascadeType.ALL, mappedBy = "customer")
@@ -77,6 +82,14 @@ public class Customer extends AbstractUser implements Serializable {
 
 	public void setGasBooking(List<GasBooking> gasBooking) {
 		this.gasBooking = gasBooking;
+	}
+
+	public SurrenderCylinder getSurrenderCylinder() {
+		return surrenderCylinder;
+	}
+
+	public void setSurrenderCylinder(SurrenderCylinder surrenderCylinder) {
+		this.surrenderCylinder = surrenderCylinder;
 	}
 
 	// toString
