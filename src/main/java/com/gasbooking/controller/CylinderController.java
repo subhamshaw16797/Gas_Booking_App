@@ -1,6 +1,5 @@
 package com.gasbooking.controller;
 
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,35 +22,36 @@ import com.gasbooking.exception.CylinderNotFoundException;
 import com.gasbooking.service.ICylinderService;
 
 @RestController
-	@RequestMapping("/cylinder")
-	@CrossOrigin
-	public class CylinderController {
+@RequestMapping("/cylinder")
+@CrossOrigin
+public class CylinderController {
+
 	@Autowired
 	ICylinderService cylinderService;
+
 	@PostMapping("/insert")
 	public ResponseEntity<?> insertCylinder(@Valid @RequestBody Cylinder cylinder) {
 		Cylinder addedCylinder = cylinderService.insertCylinder(cylinder);
 		return new ResponseEntity<Cylinder>(addedCylinder, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/updateCylinder/{cylinderId}")
-	public ResponseEntity<?> updateCylinder(@PathVariable int cylinderId, @RequestBody Cylinder cylinder) throws CylinderNotFoundException {
+	public ResponseEntity<?> updateCylinder(@PathVariable int cylinderId, @RequestBody Cylinder cylinder)
+			throws CylinderNotFoundException {
 		Cylinder updatedCylinder = cylinderService.updateCylinder(cylinderId, cylinder);
 		return new ResponseEntity<Cylinder>(updatedCylinder, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/deleteCylinder/{cylinderId}")
 	public ResponseEntity<?> deleteCylinder(@PathVariable int cylinderId) throws CylinderNotFoundException {
 		Cylinder deletedCylinder = cylinderService.deleteCylinder(cylinderId);
 		return new ResponseEntity<Cylinder>(deletedCylinder, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/viewCylindersByType/{type}")
-	public ResponseEntity<?> viewCylinderByType(@PathVariable String type) throws  CylinderNotFoundException {
+	public ResponseEntity<?> viewCylinderByType(@PathVariable String type) throws CylinderNotFoundException {
 		List<Cylinder> viewCylinders = cylinderService.viewCylinderByType(type);
 		return new ResponseEntity<List<Cylinder>>(viewCylinders, HttpStatus.OK);
 
-	}	
-
-
+	}
 }

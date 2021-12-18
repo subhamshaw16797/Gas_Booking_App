@@ -4,7 +4,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 
 import com.gasbooking.entity.Customer;
+import com.gasbooking.exception.BankNotFoundException;
 import com.gasbooking.exception.CustomerNotFoundException;
+import com.gasbooking.exception.CylinderNotFoundException;
 
 public interface ICustomerService {
 
@@ -21,4 +23,8 @@ public interface ICustomerService {
 	public Customer validateCustomer(Customer customer) throws CustomerNotFoundException;
 	
 	public Customer logout(String username) throws CustomerNotFoundException;
+	
+	public Customer updateCustomerWithBank(int id, int bankId) throws CustomerNotFoundException, BankNotFoundException;
+	
+	public Customer updateCustomerWithCylinder(int id, int cylinderId) throws CustomerNotFoundException, CylinderNotFoundException;
 }

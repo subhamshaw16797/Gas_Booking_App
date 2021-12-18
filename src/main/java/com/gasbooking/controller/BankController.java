@@ -3,6 +3,7 @@ package com.gasbooking.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,19 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gasbooking.entity.Bank;
+import com.gasbooking.entity.Customer;
 import com.gasbooking.exception.BankNotFoundException;
+import com.gasbooking.exception.CustomerNotFoundException;
 import com.gasbooking.service.IBankService;
 
 @RestController
 @RequestMapping("/bank")
+@CrossOrigin
 public class BankController {
+	
 	@Autowired
 	IBankService bankService;
 	
-	@PostMapping("/insertBank")
-	public ResponseEntity<?>insertBank(@RequestBody Bank bank){
-		Bank insertedBank=bankService.insertBank(bank);
-		return new ResponseEntity<Bank>(insertedBank,HttpStatus.CREATED);
+	@PostMapping("/profile/insertBank/{id}")
+	public ResponseEntity<?>insertBank(@PathVariable int id, @RequestBody Bank bank) throws CustomerNotFoundException, BankNotFoundException{
+		Customer insertedBank = bankService.insertBank(id, bank);
+		return new ResponseEntity<Customer>(insertedBank,HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/updateBank/{bankId}")

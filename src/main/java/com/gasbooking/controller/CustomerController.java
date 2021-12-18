@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gasbooking.entity.Customer;
 import com.gasbooking.exception.CustomerNotFoundException;
+import com.gasbooking.exception.CylinderNotFoundException;
 import com.gasbooking.service.ICustomerService;
 
 @RestController
@@ -39,8 +40,14 @@ public class CustomerController {
 	
 	@PutMapping("/updateCustomer/{customerId}")
 	public ResponseEntity<?> updateCustomer(@PathVariable int customerId, @Valid @RequestBody Customer customer) throws InputMismatchException, CustomerNotFoundException {
-		Customer updatedCustomer = customerSer.updateCustomer(customerId, customer);
-		return new ResponseEntity<Customer>(updatedCustomer, HttpStatus.OK);
+		try {
+			Customer updatedCustomer = customerSer.updateCustomer(customerId, customer);		
+			return new ResponseEntity<Customer>(updatedCustomer, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Exception>(e , HttpStatus.OK);
+		}
+//		Customer updatedCustomer = customerSer.updateCustomer(customerId, customer);		
+//		return new ResponseEntity<Customer>(updatedCustomer, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteCustomer/{customerId}")
@@ -71,5 +78,17 @@ public class CustomerController {
 	public ResponseEntity<?> logout(@RequestBody String username) throws CustomerNotFoundException{
 		Customer loggedInCustomer = customerSer.logout(username);
 		return new ResponseEntity<Customer>(loggedInCustomer, HttpStatus.OK);
+	}
+	
+//	@GetMapping("/profile/bankDetails/{id}")
+//	public ResponseEntity<?> bankDetails(@PathVariable int id) throws CustomerNotFoundException {
+//		Customer customer = customerSer.getBankDetailsById(id);
+//		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+//	}
+	
+	@PutMapping("/profile/addCustomerWithCylinder/{id}/{cylinderId}")
+	public ResponseEntity<?> updateCustomerWithCylinder(@PathVariable("id") int id, @PathVariable("cylinderId") int cylinderId) throws CustomerNotFoundException, CylinderNotFoundException{
+		Customer customer = customerSer.updateCustomerWithCylinder(id, cylinderId);
+		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 }

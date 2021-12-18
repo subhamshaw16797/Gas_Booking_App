@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -37,8 +38,10 @@ public class Cylinder implements Serializable {
 	@Column(name = "price")
 	private double price;
 	
+	private boolean isBooked = false;
+	
 	@JsonBackReference(value = "1")
-//	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
+	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
 	private Customer customer;
 	
 	@JsonBackReference(value = "5")
@@ -56,6 +59,17 @@ public class Cylinder implements Serializable {
 		this.price=price;
 	}
 	
+	public Cylinder(int cylinderId, String type, double weight, String strapColor, double price, boolean isBooked) {
+		super();
+		this.cylinderId = cylinderId;
+		this.type = type;
+		this.weight = weight;
+		this.strapColor = strapColor;
+		this.price = price;
+		this.isBooked = isBooked;
+	}
+
+
 	public Cylinder() {
 		super();
 	}
@@ -115,13 +129,21 @@ public class Cylinder implements Serializable {
 	public void setSurrenderCylinder(SurrenderCylinder surrenderCylinder) {
 		this.surrenderCylinder = surrenderCylinder;
 	}
+	
+	public boolean isBooked() {
+		return isBooked;
+	}
+
+	public void setBooked(boolean isBooked) {
+		this.isBooked = isBooked;
+	}
 
 	//ToString
-	
+
 	@Override
 	public String toString() {
 		return "Cylinder [cylinderId=" + cylinderId + ", type=" + type + ", weight=" + weight + ", strapColor="
-				+ strapColor + ", price=" + price + "]";
+				+ strapColor + ", price=" + price + ", isBooked=" + isBooked + "]";
 	}
 }
 

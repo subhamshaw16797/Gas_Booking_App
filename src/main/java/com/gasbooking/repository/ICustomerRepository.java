@@ -11,6 +11,9 @@ import com.gasbooking.entity.Customer;
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 	
 	public Optional<Customer> findByUsername(String username);
+	
+//	@Query("select b from Bank b inner join Customer c on c.bankId = b.bankId where c.id=:id")
+	public Optional<Customer> findBankById( int id);
 
 }
  

@@ -138,4 +138,9 @@ public class AbstractUser implements Serializable {
 		this.isLoggedIn = isLoggedIn;
 	}
 
+	@Override
+	public String toString() {
+		return "AbstractUser [username=" + username + ", address=" + address + ", mobileNumber=" + mobileNumber
+				+ ", email=" + email + "]";
+	}
 }

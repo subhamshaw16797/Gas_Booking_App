@@ -77,4 +77,18 @@ public  class CylinderServiceImpl implements ICylinderService{
 	     throw new CylinderNotFoundException("Cylinder detalis not found");
       }
 	}
+
+	@Override
+	public Cylinder bookCylinder(int cylinderId) throws CylinderNotFoundException {
+		Optional<Cylinder> optional = cylinderrepository.findById(cylinderId);
+		if(optional.isPresent()) {
+			Cylinder getCylinder=optional.get();
+			getCylinder.setBooked(true);
+			cylinderrepository.save(getCylinder);
+			return getCylinder;
+		}
+		else {
+			throw new CylinderNotFoundException(" Cylinder details not found");
+		}
+	}
 }

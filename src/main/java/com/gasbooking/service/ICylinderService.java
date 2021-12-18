@@ -15,4 +15,6 @@ public interface ICylinderService {
     
     public List<Cylinder> viewCylinderByType(String type) throws CylinderNotFoundException;
     
+    public Cylinder bookCylinder(int cylinderId) throws CylinderNotFoundException;
+    
 } 

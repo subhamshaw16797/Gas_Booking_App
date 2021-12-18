@@ -9,16 +9,32 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gasbooking.entity.Bank;
 import com.gasbooking.entity.Customer;
+import com.gasbooking.entity.Cylinder;
+import com.gasbooking.exception.BankNotFoundException;
 import com.gasbooking.exception.CustomerNotFoundException;
+import com.gasbooking.exception.CylinderNotFoundException;
+import com.gasbooking.repository.IBankRepository;
 import com.gasbooking.repository.ICustomerRepository;
+import com.gasbooking.repository.ICylinderRepository;
+
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	ICustomerRepository customerRepository;
+	
+	@Autowired
+	ICylinderRepository cylinderRepository;
 
+	@Autowired
+	ICylinderService cylinderService;
+	
+	@Autowired
+	IBankRepository bankRepository;
+	
 	Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 	// inserting a single object
@@ -59,13 +75,10 @@ public class CustomerServiceImpl implements ICustomerService {
 			if (optional.isPresent()) {
 				Customer gotCustomer = optional.get();
 				gotCustomer.setUsername(customer.getUsername());
-				gotCustomer.setPassword(customer.getPassword());
+//				gotCustomer.setPassword(customer.getPassword());
 				gotCustomer.setAddress(customer.getAddress());
 				gotCustomer.setEmail(customer.getEmail());
 				gotCustomer.setMobileNumber(customer.getMobileNumber());
-				gotCustomer.setBank(customer.getBank());
-				gotCustomer.setCylinder(customer.getCylinder());
-				gotCustomer.setGasBooking(customer.getGasBooking());
 				Customer updateCustomer = customerRepository.save(gotCustomer);
 				return updateCustomer;
 			}
@@ -182,6 +195,61 @@ public class CustomerServiceImpl implements ICustomerService {
 		getCustomer.setLoggedIn(false);
 		customerRepository.save(getCustomer);
 		return getCustomer;
+	}
+	
+	//mapping between customer and bank
+	@Override
+	public Customer updateCustomerWithBank(int id, int bankId) throws CustomerNotFoundException, BankNotFoundException {
+		
+		Optional<Customer> optional = customerRepository.findById(id);
+		
+		if(optional.isPresent()) {
+			Optional<Bank> optionalBank = bankRepository.findById(bankId);
+			
+			if(optionalBank.isPresent()) {
+				Bank getBank = optionalBank.get();
+				Customer getCustomer = optional.get();
+				getCustomer.setBank(getBank);
+				customerRepository.save(getCustomer);
+				return getCustomer;
+			}
+			else {
+				throw new BankNotFoundException("Bank is not present.");
+			}
+		}
+		else {
+			throw new CustomerNotFoundException("Customer is not present in the database.");
+		}
+		
+	}
+
+	//mapping between customer and cylinder
+	
+	@Override
+	public Customer updateCustomerWithCylinder(int id, int cylinderId) throws CustomerNotFoundException, CylinderNotFoundException {
+		
+		cylinderService.bookCylinder(cylinderId);
+		
+		Optional<Customer> optional = customerRepository.findById(id);
+		
+		if(optional.isPresent()) {
+			Optional<Cylinder> optionalCylinder = cylinderRepository.findById(cylinderId);
+			
+			if(optionalCylinder.isPresent()) {
+				Cylinder getCylinder = optionalCylinder.get();
+				Customer getCustomer = optional.get();
+				getCustomer.setCylinder(getCylinder);
+				customerRepository.save(getCustomer);
+				return getCustomer;
+			}
+			else {
+				throw new CylinderNotFoundException("Cylinder is not present.");
+			}
+		}
+		else {
+			throw new CustomerNotFoundException("Customer is not present in the database.");
+		}
+		
 	}
 
 }

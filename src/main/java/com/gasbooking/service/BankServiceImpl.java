@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gasbooking.entity.Bank;
+import com.gasbooking.entity.Customer;
 import com.gasbooking.exception.BankNotFoundException;
+import com.gasbooking.exception.CustomerNotFoundException;
 import com.gasbooking.repository.IBankRepository;
 
 @Service
@@ -16,15 +18,36 @@ public class BankServiceImpl implements IBankService {
 
 	@Autowired
 	IBankRepository bankRepository;
+	
+	@Autowired
+	ICustomerService customerService;
 
 	Logger logger=LoggerFactory.getLogger(BankServiceImpl.class);
 	
 	@Override
-	public Bank insertBank(Bank bank) {
+	public Customer insertBank(int id, Bank bank) throws CustomerNotFoundException, BankNotFoundException {
 
 		logger.info("****************Inserting Bank Details****************");
 
-		return bankRepository.save(bank);
+		int getAccountNo = bank.getAccountNo();
+		String getPan = bank.getPan();
+		Optional<Bank> optional = bankRepository.findByAccountNo(getAccountNo);
+		
+		Optional<Bank> panOptional = bankRepository.findByPan(getPan);
+		
+		if(optional.isPresent()) {
+			throw new BankNotFoundException("Account Number is already exist in the database.");
+		}
+		
+		if(panOptional.isPresent()) {
+			throw new BankNotFoundException("Pan number is already exist in the database.");
+		}
+		
+		Bank insertedbank = bankRepository.save(bank);
+		
+		int gotBankId = insertedbank.getBankId();
+		Customer mappedCustomerWithBank = customerService.updateCustomerWithBank(id, gotBankId);
+		return mappedCustomerWithBank;
 	}
 
 	@Override
